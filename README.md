@@ -23,17 +23,17 @@ without recompiling the query everytime.
 
 ```clojure
 ; Query
-[{'(:hero {:episode {:variable/name "episode"
-                     :variable/type :String}})
-  [:name {:friends [:name]}]}]
+(geql.core/query->graphql [{'(:hero {:episode {:variable/name "episode"
+                                               :variable/type :String}})
+                            [:name {:friends [:name]}]}])
 => "query ($episode:String){hero(episode:$episode){name,friends{name}}}"
 
 ; Mutation
-[{'(createReview {:episode {:variable/name "episode"
-                            :variable/type :Episode!}
-                  :stars   {:variable/name    "stars"
-                            :variable/type    :ReviewStars!
-                            :variable/default 5}})
-  [:name :stars]}]
+(geql.core/query->graphql [{'(createReview {:episode {:variable/name "episode"
+                                                      :variable/type :Episode!}
+                                            :stars   {:variable/name    "stars"
+                                                      :variable/type    :ReviewStars!
+                                                      :variable/default 5}})
+                            [:name :stars]}])
 => "mutation ($episode:Episode!,$stars:ReviewStars!=5){createReview(episode:$episode,stars:$stars){name,stars}}"
 ```
